@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:inline="text">
+<head>
+  <title th:text="#{generic.welcome}">Welcome</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome.css}"/>
+
+  <script type="text/javascript" th:src="@{/script/jquery.js}"></script>
+  <script type="text/javascript" th:src="@{/script/bootstrap.js}"></script>
+</head>
+<body role="document">
+<div class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" th:href="@{/}"><i class="fa fa-home"></i> SAML Auth POC</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <small>
+              <span th:text="#{generic.welcome}">Welcome</span>,
+              <span sec:authentication="details">[user name]</span>!
+              <i class="fa fa-angle-down"></i>
+            </small>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a th:href="@{/logout}" th:text="#{security.logout}">Sign-out</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1 th:text="#{generic.welcome}">Welcome</h1>
+    <p>You have successfully authenticated with Spring Security! All users registered with this application are listed below.</p>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading" th:text="#{generic.users}">Users</div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+      <thead>
+      <tr>
+        <th width="5%" th:text="#{generic.index}">S.No.</th>
+        <th width="60%" th:text="#{registration.email}">Email</th>
+        <th width="17.5%" th:text="#{registration.name}">First name</th>
+        <th width="17.5%" th:text="#{registration.surname}">Last name</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr th:each="user: ${users}">
+          <td th:text="${userStat.index + 1} + '.'">1.</td>
+          <td th:text="${user.emailAddress}">Email</td>
+          <td th:text="${user.firstName}">First name</td>
+          <td th:text="${user.lastName}">Last name</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+</body>
+</html>
